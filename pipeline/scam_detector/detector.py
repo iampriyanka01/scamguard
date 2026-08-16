@@ -23,6 +23,7 @@ class ScamDetector:
             # The 3-step pipeline
             prompt = build_prompt(message, self.strategy)
             raw_response = self.executor.execute(prompt)
+            print(f"Raw LLM Response: {raw_response}")  # Debugging line to print raw response
             parsed_result = self.parser.parse_llm_output(raw_response)
 
             logger.info(f"Detection successful. Result: {parsed_result.get('label', 'Unknown')}")
