@@ -32,7 +32,7 @@ with tab1:
             with st.spinner("Analyzing message..."):
                 try:
                     result = detector.detect(user_input)
-                    
+
                     # Display results
                     col1, col2 = st.columns(2)
                     
@@ -106,6 +106,10 @@ with tab2:
                         # Create results dataframe
                         results_df = pd.DataFrame(results)
                         results_df["message_txt"] = messages
+                        
+                        # ✅ Reorder columns so message_txt is first
+                        cols = ["message_txt"] + [col for col in results_df.columns if col != "message_txt"]
+                        results_df = results_df[cols]
                         
                         # Reset index to start at 1 and rename
                         results_df.index = results_df.index + 1
