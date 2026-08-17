@@ -10,7 +10,7 @@ import pandas as pd
 from pipeline.scam_detector.detector import ScamDetector
 
 st.set_page_config(page_title="Scam Detection App", layout="wide")
-st.title(" Scam Detection System")
+st.title("🚨 Scam Detection System")
 
 # Initialize detector
 detector = ScamDetector()
@@ -21,8 +21,11 @@ tab1, tab2 = st.tabs(["Single Message", "Dataset Evaluation"])
 # ----------- Single Message Analysis ----------
 with tab1:
     st.header("Analyze a Single Message")
-    user_input = st.text_area("Enter the message to analyze:", height=150, 
-                             placeholder="Example: Congratulations! You've won $1000. Click here to claim...")
+    user_input = st.text_area(
+        "Enter the message to analyze:",
+        height=150,
+        placeholder="Example: Congratulations! You've won $1000. Click here to claim..."
+    )
     
     if st.button("Analyze Message", type="primary"):
         if user_input.strip():
@@ -74,6 +77,11 @@ with tab2:
         try:
             df = pd.read_csv(uploaded_file)
             st.write(f"Loaded dataset with {len(df)} rows")
+            
+            # Reset index to start at 1 and rename
+            df.index = df.index + 1
+            df.index.name = "Message #"
+            
             st.write("Sample data:")
             st.dataframe(df.head())
             
@@ -89,7 +97,7 @@ with tab2:
                 st.write(f"Using '{text_col}' as text column")
                 
                 # Limit for demo purposes
-                max_rows = min(len(df), 10)
+                max_rows = min(len(df), 5)
                 if st.button(f"Analyze First {max_rows} Messages"):
                     with st.spinner(f"Analyzing {max_rows} messages..."):
                         messages = df[text_col].head(max_rows).tolist()
@@ -97,14 +105,20 @@ with tab2:
                         
                         # Create results dataframe
                         results_df = pd.DataFrame(results)
+                        results_df["message_txt"] = messages
+                        
+                        # Reset index to start at 1 and rename
+                        results_df.index = results_df.index + 1
+                        results_df.index.name = "Message #"
                         
                         st.subheader("Analysis Results")
                         st.dataframe(results_df)
                         
                         # Summary statistics
-                        label_counts = results_df['label'].value_counts()
-                        st.subheader("Summary")
-                        st.bar_chart(label_counts)
+                        if "label" in results_df.columns:
+                            label_counts = results_df['label'].value_counts()
+                            st.subheader("Summary")
+                            st.bar_chart(label_counts)
                         
             else:
                 st.error(f"Could not find text column. Expected one of: {text_columns}")

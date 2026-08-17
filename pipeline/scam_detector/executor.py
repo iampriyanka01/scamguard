@@ -15,7 +15,7 @@ class LLMExecutor:
         try:
             response = self.llm.call(prompt)
             logger.info(f"LLM execution successful, response length: {len(response)}")
-            logger.info(f"Full LLM response object: {response}")
+            logger.info(f"Full LLM response object: {response}")  # Log the full response object for debugging
             return response
         except Exception as e:
             logger.error(f"LLM execution failed: {str(e)}")
