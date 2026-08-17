@@ -1,4 +1,3 @@
-markdown
 # 🚨 ScamGuard AI: Protecting Trust with Generative Intelligence
 
 ScamGuard AI is a modular, scalable system designed to detect scam messages using **Google Gemini**, **Streamlit**, and modern prompt engineering techniques. It classifies messages as **Scam**, **Not Scam**, or **Uncertain**, while also providing reasoning, intent, and risk factors.
@@ -23,46 +22,63 @@ ScamGuard AI is a modular, scalable system designed to detect scam messages usin
 
 ---
 
-## Folder Structure 
-scam-detection/
-├── config.py                          # Central configuration
-├── main.py                            # CLI interface
-├── requirements.txt                   # Dependencies
-├── .env                               # Environment variables
-├── utils.py                           # Common helper function
-|
-├── llm/                 # LLM integration layer
-│ ├── client.py                        # Gemini API client
-│ ├── prompts.py                       # Prompt management
-│ ├── validator.py                     # Response validation
-│ └── prompts/                         # Prompt templates
-|
-├── pipeline/           # Core detection pipeline
-│ └── scam_detector/
-│   ├── detector.py                    # Main orchestrator
-│   ├── builder.py                     # Prompt building
-│   ├── executor.py                    # LLM execution
-│   └── parser.py                      # Result parsing
-|                    
-├── streamlit/          # Web interface
+## 🏗️ Project Structure
+![FolderStructure](assets/screenshots/FolderStructure.png)
 
 ---
 
-## ⚙️ Setup Instructions
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/iampriyanka01/scamguard.git
-   cd scamguard
+## ⚙️ Installation
 
-    python -m venv venv
-    source venv/bin/activate   # Mac/Linux
-    venv\Scripts\activate      # Windows PowerShell
+### 1. Clone the repository
+```bash
+git clone https://github.com/YOUR_USERNAME/ScamGuard.git
+cd scam-detection
+```
+###  2. Create a virtual environment
+```bash
+python -m venv venv
+```
+**Activate:**
+**Window**s: venv\Scripts\activate
+**Mac/Linux**: source venv/bin/activate
 
-    python -m pip install --upgrade pip
-    python -m pip install -r requirements.txt
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
+### 4. Configure environment
+Create a .env file:
+```bash
+GEMINI_API_KEY=your_google_api_key_here
+```
+### 📦 Requirements
+```bash
+google-genai==1.27.0
+pandas==2.3.3
+pydantic==2.11.7
+python-dotenv==1.1.1
+streamlit==1.47.1
+tqdm==4.67.1
+```
+---
+## 🚀 Usage
 
-    python -m streamlit run streamlit/app.py
+**Run CLI**
+```code
+python main.py
+```
+**Run Streamlit App**
+```code
+streamlit run streamlit/app.py
+```
+---
+## 📂 Sample Dataset
+
+You can download the sample dataset used for testing here:  
+[Download Sample Data (CSV)](https://drive.google.com/file/d/15EIHzMQKD_aSaI_lAeJpha1mTj2Ze8ZQ/view)
+
+---
 
 ## 🎥 Demo
 
@@ -80,11 +96,20 @@ Input:
 
 
 ### Multiple Message Example
-Input:
-dataset.csv file
+Input: You can download the sample dataset used for testing here:  
+[Download Sample Data (CSV)](https://drive.google.com/file/d/15EIHzMQKD_aSaI_lAeJpha1mTj2Ze8ZQ/view)
 ![Multiple Message Example](assets/screenshots/Multi_message.png)
 
-
+### 📚 Example Output
+```json
+{
+  "label": "Scam",
+  "reasoning": "The message explicitly requests the recipient to share a One-Time Password (OTP)...",
+  "intent": "To trick the recipient into sharing their OTP",
+  "risk_factors": ["account compromise", "financial risk", "confidential information request"]
+}
+```
+---
 ## 🏆 Educational Value
 
 This project demonstrates:
